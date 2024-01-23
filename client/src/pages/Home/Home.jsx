@@ -1,7 +1,10 @@
-import { Search } from "../../components/Search"
-import Video from "./Video"
+import { Search } from "../../components/Search";
+import { useGetVideosQuery } from "../../redux/features/api/apiSlice";
+import Video from "./Video";
 
 const Home = () => {
+  const {data:videos,isLoading,isError}= useGetVideosQuery();
+ 
   return (
     <section className="pt-6 pb-20 min-h-[calc(100vh-175px)] max-w-7xl mx-auto">
       {/* category button and search */}
@@ -20,11 +23,8 @@ const Home = () => {
 
       {/* video grid  */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-5 lg:px-0 min-h-[300px]">
-        <Video />
-        <Video />
-        <Video />
-        <Video />
-        <Video />
+      {videos?.length > 0 ? (videos.map((video) => <Video key={video.id} video={video} />)) : (<div>No videos found</div>)}
+å
       </div>
     </section>
   )
